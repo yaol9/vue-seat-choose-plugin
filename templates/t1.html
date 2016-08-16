@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<title>TIXPA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-red.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+
+<body>
+
+<!-- Side Navigation -->
+<nav class="w3-sidenav w3-white w3-card-2 w3-animate-left" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-closenav w3-xxxlarge w3-text-theme">Close <i class="fa fa-remove"></i></a>
+  <a href="javascript:void(0)">关于 TIXPA</a>
+  <a href="javascript:void(0)">合作伙伴</a>
+  <a href="javascript:void(0)">联系我们</a>
+</nav>
+
+<!-- Header -->
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+  <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-opennav"></i>
+  <div class="w3-center">
+  <h4>澳大利亚最大华人票务网站 - TIXPA.COM</h4>
+  <h1 class="w3-xxxlarge w3-animate-bottom w3-padding-64">德云社20周年郭德纲10月墨尔本专场</h1>
+  </div>
+</header>
+
+<!-- Modal -->
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-8 w3-animate-top">
+      <header class="w3-container w3-theme-l1">
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn">×</span>
+        <h4>Oh snap! We just showed you a modal..</h4>
+        <h5>Because we can <i class="fa fa-smile-o"></i></h5>
+      </header>
+      <div class="w3-padding">
+        <p>Cool huh? Ok, enough teasing around..</p>
+        <p>Go to our <a class="w3-btn" href="/w3css/default.asp">W3.CSS Tutorial</a> to learn more!</p>
+      </div>
+      <footer class="w3-container w3-theme-l1">
+        <p>Modal footer</p>
+      </footer>
+    </div>
+</div>
+
+<div id="app" class="w3-row-padding w3-center w3-margin-top">
+  <div class="w3-third">
+    <div class="w3-card-2 w3-padding-top" style="min-height:460px">
+      <div v-show="!is_event_time_selected">
+        <h4>选择演出时间</h4><br>
+        <i class="fa fa-calendar w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+        <ul class="w3-ul">
+          <li v-for="event_time in event_times" @click="is_event_time_selected=true,event_time_selected=event_time" class="w3-hover-red w3-padding-16 w3-xlarge"><i class="fa fa-clock-o"></i>{{ event_time }}</li>        
+        </ul>
+      </div>
+      <div v-show="is_event_time_selected">
+        <p class="w3-red w3-xlarge">演出时间: {{ event_time_selected }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="event_time_selected='',is_event_time_selected=false;">(重新选择)</span></p>
+      </div>
+      <div v-show="is_event_time_selected && !is_seat_area_selected">
+        <img src="{{ event_seat_image }}" style="width:100%;"/>
+        <div class="w3-dropdown-hover">
+          <button class="w3-btn w3-red">选择座位区域</button>
+          <div class="w3-dropdown-content w3-border">
+            <a href="#" v-for="seat_area in seat_areas" @click="is_seat_area_selected=true,seat_area_selected=seat_area">{{ seat_area }}</a>
+          </div>
+        </div>
+        <br/><br/><br/><br/>
+      </div>
+      <div v-show="is_seat_area_selected">
+        <p class="w3-red w3-xlarge">座位区域: {{ seat_area_selected }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="seat_area_selected='',is_seat_area_selected=false;">(重新选择)</span></p>  
+      </div>
+      
+    </div>
+  </div>
+
+<div class="w3-third">
+  <div class="w3-card-2 w3-padding-top" style="min-height:460px">
+    <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
+    <div v-show="is_seat_area_selected"> 
+      <h4>选择座位</h4>
+      <table class="w3-table w3-border ">
+        <tr>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+        </tr>
+        <tr>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+          <td><i class="fa fa-square-o"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="w3-third">
+  <div class="w3-card-2 w3-padding-top" style="min-height:460px">
+  <img src="http://d35kvm5iuwjt9t.cloudfront.net/dbimages/sfx165256.png" style="width:100%;"/>
+  <div class="w3-container w3-center w3-border w3-red">
+    <p class="">演出场地: {{ event_place }}</p>
+  </div>
+  <p>这里是选座后的订单实时更新</p>
+  </div>
+</div>
+</div>
+
+<br>
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-dark w3-padding-16 w3-center  ">
+<div class="w3-xlarge w3-padding-32">
+  <a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
+   <a href="#" class="w3-hover-text-red"><i class="fa fa-pinterest-p"></i></a>
+   <a href="#" class="w3-hover-text-light-blue"><i class="fa fa-twitter"></i></a>
+   <a href="#" class="w3-hover-text-grey"><i class="fa fa-flickr"></i></a>
+   <a href="#" class="w3-hover-text-indigo"><i class="fa fa-linkedin"></i></a>
+ </div>
+  <p style="font-weight:normal">TIXPA.COM</a></p>
+</footer>
+
+<!-- Script for Sidenav, Tabs, Accordions, Progress bars and slideshows -->
+<script>
+// Side navigation
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "100%";
+    x.style.textAlign = "center";
+    x.style.fontSize = "50px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Tabs
+function openCity(evt, cityName) {
+  var i;
+  var x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  var activebtn = document.getElementsByClassName("testbtn");
+  for (i = 0; i < x.length; i++) {
+      activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " w3-dark-grey";
+}
+
+
+// Accordions
+function myAccFunc(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-dark-grey";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-dark-grey", "");
+    }
+}
+
+// Slideshows
+var slideIndex = 1;
+
+function plusDivs(n) {
+slideIndex = slideIndex + n;
+showDivs(slideIndex);
+}
+
+function showDivs(n) {
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+
+
+// Progress Bars
+function move() {
+  var elem = document.getElementById("myBar");
+  var width = 1;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width == 100) {
+      clearInterval(id);
+    } else {
+      width++;
+      elem.style.width = width + '%';
+      document.getElementById("demoprgr").innerHTML = width * 1  + '%';
+    }
+  }
+}
+</script>
+
+<script src="vue_demo.js"></script>
+</body>
+</html>
+
+
