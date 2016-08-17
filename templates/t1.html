@@ -22,31 +22,13 @@
   <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-opennav"></i>
   <div class="w3-center">
   <h4>澳大利亚最大华人票务网站 - TIXPA.COM</h4>
-  <h1 class="w3-xxxlarge w3-animate-bottom w3-padding-64">德云社20周年郭德纲10月墨尔本专场</h1>
+  <h1 class="w3-xxxlarge w3-padding-64">德云社20周年郭德纲10月墨尔本专场</h1>
   </div>
 </header>
 
-<!-- Modal -->
-<div id="id01" class="w3-modal">
-    <div class="w3-modal-content w3-card-8 w3-animate-top">
-      <header class="w3-container w3-theme-l1">
-        <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn">×</span>
-        <h4>Oh snap! We just showed you a modal..</h4>
-        <h5>Because we can <i class="fa fa-smile-o"></i></h5>
-      </header>
-      <div class="w3-padding">
-        <p>Cool huh? Ok, enough teasing around..</p>
-        <p>Go to our <a class="w3-btn" href="/w3css/default.asp">W3.CSS Tutorial</a> to learn more!</p>
-      </div>
-      <footer class="w3-container w3-theme-l1">
-        <p>Modal footer</p>
-      </footer>
-    </div>
-</div>
-
 <div id="app" class="w3-row-padding w3-center w3-margin-top">
   <div class="w3-third">
-    <div class="w3-card-2 w3-padding-top" style="min-height:460px">
+    <div class="w3-card-2 w3-padding-top" style="min-height:640px">
       <div v-show="!is_event_time_selected">
         <h4>选择演出时间</h4><br>
         <i class="fa fa-calendar w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
@@ -55,76 +37,62 @@
         </ul>
       </div>
       <div v-show="is_event_time_selected">
-        <p class="w3-red w3-xlarge">演出时间: {{ event_time_selected }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="event_time_selected='',is_event_time_selected=false;">(重新选择)</span></p>
+        <p class="w3-red w3-large">演出时间: {{ event_time_selected }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="event_time_selected='',is_event_time_selected=false;">(重新选择)</span></p>
       </div>
       <div v-show="is_event_time_selected && !is_seat_area_selected">
-        <img src="{{ event_seat_image }}" style="width:100%;"/>
+        <img   v-bind:src="event_seat_image" style="width:100%;"/>
         <div class="w3-dropdown-hover">
           <button class="w3-btn w3-red">选择座位区域</button>
           <div class="w3-dropdown-content w3-border">
-            <a href="#" v-for="seat_area in seat_areas" @click="is_seat_area_selected=true,seat_area_selected=seat_area">{{ seat_area }}</a>
+            <a href="#" v-for="seat_area in seat_areas" @click="is_seat_area_selected=true,seat_area_selected=seat_area">{{ seat_area.Name }}</a>
           </div>
         </div>
         <br/><br/><br/><br/>
       </div>
       <div v-show="is_seat_area_selected">
-        <p class="w3-red w3-xlarge">座位区域: {{ seat_area_selected }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="seat_area_selected='',is_seat_area_selected=false;">(重新选择)</span></p>  
+        <p class="w3-red w3-large">座位区域: {{ seat_area_selected.Name }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="seat_area_selected='',is_seat_area_selected=false;">(重新选择)</span></p>  
       </div>
       
     </div>
   </div>
 
 <div class="w3-third">
-  <div class="w3-card-2 w3-padding-top" style="min-height:460px">
+  <div class="w3-card-2 w3-padding-top" style="min-height:640px">
     <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
     <div v-show="is_seat_area_selected"> 
       <h4>选择座位</h4>
-      <table class="w3-table w3-border ">
-        <tr>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-        </tr>
-        <tr>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-        </tr>
-        <tr>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-          <td><i class="fa fa-square-o"></td>
-        </tr>
-      </table>
+      <seats :seat_area_selected="seat_area_selected"></seats>
     </div>
   </div>
 </div>
 
 <div class="w3-third">
-  <div class="w3-card-2 w3-padding-top" style="min-height:460px">
-  <img src="http://d35kvm5iuwjt9t.cloudfront.net/dbimages/sfx165256.png" style="width:100%;"/>
-  <div class="w3-container w3-center w3-border w3-red">
-    <p class="">演出场地: {{ event_place }}</p>
-  </div>
-  <p>这里是选座后的订单实时更新</p>
+  <div class="w3-card-2 w3-padding-top" style="min-height:640px">
+    <img src="http://d35kvm5iuwjt9t.cloudfront.net/dbimages/sfx165256.png" style="width:100%;"/>
+    <div class="w3-container w3-center w3-border w3-red">
+      <p class="">演出场地: {{ event_place }}</p>
+    </div>
+    
+    <p class="w3-padding-8"></p>
+    <div class="w3-animate-bottom" v-if="seat_selected[3].length>0">
+      {{ seat_ranks['3'].Name }} X {{ seat_selected['3'].length }} = ${{ subtotal_3 }}
+      <p class=""><span class="w3-border w3-padding" v-for="seat_selected in seat_selected['3']">{{ seat_selected }}&nbsp;<i @click="delete_ticket(seat_selected,'3')" class="fa fa-close"></i></span></p>
+    </div>
+    <div class="w3-animate-bottom" v-if="seat_selected[2].length>0">
+      {{ seat_ranks['2'].Name }} X {{ seat_selected['2'].length }} = ${{ subtotal_2 }}
+      <p class=""><span class="w3-border w3-padding" v-for="seat_selected in seat_selected['2']">{{ seat_selected }}&nbsp;<i @click="delete_ticket(seat_selected,'2')" class="fa fa-close"></i></span></p>
+    </div>
+    <div class="w3-animate-bottom" v-if="seat_selected[1].length>0">
+      {{ seat_ranks['1'].Name }} X {{ seat_selected['1'].length }} = ${{ subtotal_1 }}
+      <p class=""><span class="w3-border w3-padding" v-for="seat_selected in seat_selected['1']">{{ seat_selected }}&nbsp;<i @click="delete_ticket(seat_selected,'1')" class="fa fa-close"></i></span></p>
+    </div>
+    
+    <div class="w3-animate-bottom" v-if="seat_selected[3].length>0 || seat_selected[2].length>0 || seat_selected[1].length>0" class="w3-padding-16">
+      <p>支付总金额: ${{ total_amt }}</p>
+      <button class="w3-btn w3-red">支付订单</button>
+      <p class="w3-padding-8"></p>
+    </div>
+
   </div>
 </div>
 </div>
@@ -157,73 +125,45 @@ function w3_open() {
 function w3_close() {
     document.getElementById("mySidenav").style.display = "none";
 }
-
-// Tabs
-function openCity(evt, cityName) {
-  var i;
-  var x = document.getElementsByClassName("city");
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";
-  }
-  var activebtn = document.getElementsByClassName("testbtn");
-  for (i = 0; i < x.length; i++) {
-      activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " w3-dark-grey";
-}
-
-
-// Accordions
-function myAccFunc(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-dark-grey";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-        x.previousElementSibling.className =
-        x.previousElementSibling.className.replace(" w3-dark-grey", "");
-    }
-}
-
-// Slideshows
-var slideIndex = 1;
-
-function plusDivs(n) {
-slideIndex = slideIndex + n;
-showDivs(slideIndex);
-}
-
-function showDivs(n) {
-  var x = document.getElementsByClassName("mySlides");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length} ;
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";
-  }
-  x[slideIndex-1].style.display = "block";
-}
-
-
-// Progress Bars
-function move() {
-  var elem = document.getElementById("myBar");
-  var width = 1;
-  var id = setInterval(frame, 10);
-  function frame() {
-    if (width == 100) {
-      clearInterval(id);
-    } else {
-      width++;
-      elem.style.width = width + '%';
-      document.getElementById("demoprgr").innerHTML = width * 1  + '%';
-    }
-  }
-}
 </script>
 
+<!-- vue template -->
+<template id="seats-template">
+  <h4>座位说明</h4>
+  <div class="w3-row-padding w3-padding-16">
+	  <div class="w3-quarter">
+	  	<img src="chair-0.png" width="24"  /><i class="w3-small">可选座位</i>
+		</div>
+	  <div class="w3-quarter">
+	  	<img src="chair-1.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['1'].Name }} (${{ this.$parent.seat_ranks['1'].Price }})</i>
+	  </div>
+	  <div class="w3-quarter">
+	  	<img src="chair-2.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['2'].Name }} (${{ this.$parent.seat_ranks['2'].Price }})</i>
+		</div>
+	  <div class="w3-quarter">
+	  	<img src="chair-3.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['3'].Name }} (${{ this.$parent.seat_ranks['3'].Price }})</i>
+		</div>
+	</div>
+  <table class="w3-table w3-border">
+    <tbody>
+    <tr v-for="row in seat_area_selected.Rows">
+      <td class="w3-theme-dark">{{ row.Name }}</td>
+      <td v-for="seat in row.Seats">
+      	<div v-if="!seat.NoSeat">
+	        <div @click="choose_seat(row,seat)">
+	          <img class="" v-if="seat.Occupied || is_selected(row,seat)" width="24" v-bind:src="'chair-'+ seat.PriceRank + '.png'"/>
+	          <img v-else width="24" src="chair-0.png"/>
+	        </div>
+        </div>
+      </td>      
+    </tr>  
+    </tbody>  
+  </table>
+</template>
+
+<!-- vue script -->
 <script src="vue_demo.js"></script>
+
 </body>
 </html>
 
