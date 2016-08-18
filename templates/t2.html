@@ -28,7 +28,7 @@
 </header>
 
 <div id="app" class="w3-row-padding w3-center w3-margin-top">
-  <div class="w3-third">
+  <div class="w3-twothird">
     <div class="w3-card-2 w3-padding-top" style="min-height:640px">
       <div v-show="!is_event_time_selected">
         <h4>选择演出时间</h4><br>
@@ -54,18 +54,18 @@
         <p class="w3-red w3-large">座位区域: {{ seat_area_selected.Name }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="seat_area_selected='',is_seat_area_selected=false;">(重新选择)</span></p>  
       </div>
       
+      <div class="w3-card-2 w3-padding-top">
+        <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
+        <div v-show="is_seat_area_selected"> 
+          <h4>选择座位</h4>
+          <seats :seat_area_selected="seat_area_selected"></seats>
+        </div>
+      </div>
+
     </div>
   </div>
 
-<div class="w3-third">
-  <div class="w3-card-2 w3-padding-top" style="min-height:640px">
-    <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
-    <div v-show="is_seat_area_selected"> 
-      <h4>选择座位</h4>
-      <seats :seat_area_selected="seat_area_selected"></seats>
-    </div>
-  </div>
-</div>
+
 
 <div class="w3-third">
   <div class="w3-card-2 w3-padding-top" style="min-height:640px">
