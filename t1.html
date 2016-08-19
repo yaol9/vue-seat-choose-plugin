@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-red.css">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
 
 <body>
 
@@ -28,7 +27,7 @@
 </header>
 
 <div id="app" class="w3-row-padding w3-center w3-margin-top">
-  <div class="w3-twothird">
+  <div class="w3-third">
     <div class="w3-card-2 w3-padding-top" style="min-height:640px">
       <div v-show="!is_event_time_selected">
         <h4>选择演出时间</h4><br>
@@ -54,18 +53,18 @@
         <p class="w3-red w3-large">座位区域: {{ seat_area_selected.Name }} <span class="w3-small" style="text-decoration:underline;cursor:pointer;" @click="seat_area_selected='',is_seat_area_selected=false;">(重新选择)</span></p>  
       </div>
       
-      <div class="w3-card-2 w3-padding-top">
-        <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
-        <div v-show="is_seat_area_selected"> 
-          <h4>选择座位</h4>
-          <seats :seat_area_selected="seat_area_selected"></seats>
-        </div>
-      </div>
-
     </div>
   </div>
 
-
+<div class="w3-third">
+  <div class="w3-card-2 w3-padding-top" style="min-height:640px">
+    <p class="w3-large" v-show="!is_seat_area_selected">{{ event_intro }}</p> 
+    <div v-show="is_seat_area_selected"> 
+      <h4>选择座位</h4>
+      <seats :seat_area_selected="seat_area_selected"></seats>
+    </div>
+  </div>
+</div>
 
 <div class="w3-third">
   <div class="w3-card-2 w3-padding-top" style="min-height:640px">
@@ -128,47 +127,8 @@ function w3_close() {
 }
 </script>
 
-<!-- vue template -->
-<template id="seats-template">
-  <h4>座位说明</h4>
-  <div class="w3-row-padding w3-padding-16">
-	  <div class="w3-quarter">
-	  	<img src="chair-0.png" width="24"  /><i class="w3-small">可选座位</i>
-		</div>
-	  <div class="w3-quarter">
-	  	<img src="chair-1.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['1'].Name }} (${{ this.$parent.seat_ranks['1'].Price }})</i>
-	  </div>
-	  <div class="w3-quarter">
-	  	<img src="chair-2.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['2'].Name }} (${{ this.$parent.seat_ranks['2'].Price }})</i>
-		</div>
-	  <div class="w3-quarter">
-	  	<img src="chair-3.png" width="24"  /><i class="w3-small">{{ this.$parent.seat_ranks['3'].Name }} (${{ this.$parent.seat_ranks['3'].Price }})</i>
-		</div>
-	</div>
-  <div class="w3-center w3-padding-24">
-    <table  style="max-width:100%;width:auto;margin: 0 auto;" class="w3-border w3-centered">
-      <tbody>
-      <tr v-for="row in seat_area_selected.Rows">
-        <td width="24" class="w3-theme-dark">{{ row.Name }}</td>
-        <td width="24" v-for="seat in row.Seats">
-        	<div v-if="!seat.NoSeat && !seat.WheelChair">
-  	        <div @click="choose_seat(row,seat)">
-  	          <img class="" v-if="seat.Occupied || is_selected(row,seat)" width="24" v-bind:src="'chair-'+ seat.PriceRank + '.png'"/>
-  	          <img v-else width="24" src="chair-0.png"/>
-  	        </div>
-          </div>
-          <div v-if="seat.WheelChair">
-            <img width="24" src="wheel-chair.png"/>
-          </div>
-        </td>      
-      </tr>  
-      </tbody>  
-    </table>
-  </div>
-</template>
-
 <!-- vue script -->
-<script src="vue_demo.js"></script>
+<script src="./dist/build.js"></script>
 
 </body>
 </html>
