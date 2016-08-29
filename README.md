@@ -1,4 +1,4 @@
-# tixpa_demo
+# vue-seat-choose demo
 
 > A Vue.js project
 
